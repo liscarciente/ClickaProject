@@ -1,0 +1,27 @@
+{
+  "name": "clicka-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start:backend": "yarn workspace clicka-backend dev",
+    "start:frontend": "yarn workspace clicka-frontend start",
+    "build": "yarn workspaces run build"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/react": "^19.1.7"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "clsx": "^2.1.1",
+    "react-hook-form": "^7.58.0",
+    "zod": "^3.25.64"
+  }
+}
