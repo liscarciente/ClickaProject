@@ -53,6 +53,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
 import { useTheme } from "../themeConfig";
+import { useTranslation } from "react-i18next";
+
+// import { AlertCircle } from "lucide-react"; // 
 
 // Interfaces base
 export interface BaseComponentProps {
@@ -83,6 +86,7 @@ export function Form<T extends FieldValues>({
   children,
 }: FormComponentProps<T>) {
   const theme = useTheme();
+  const { t } = useTranslation(); // Traducción activa
   const effectiveDir = dir || theme.direction;
 
   const methods: UseFormReturn<T> = useForm<T>({
@@ -107,8 +111,26 @@ export function Form<T extends FieldValues>({
               ? theme.typography.fontFamily.hebrew
               : theme.typography.fontFamily.latin,
         }}
+        role="form"
+        aria-label={t(label)} // Etiqueta accesible traducida
       >
-        <h2 className="text-xl font-semibold mb-4">{label}</h2>
+        <h2 className="text-xl font-semibold mb-4">{t(label)}</h2>
+
+        {/* Contenedor para errores generales del formulario */}
+        {methods.formState.errors.root && (
+          <div
+            className="text-red-600 text-sm mb-2"
+            role="alert"
+            aria-live="assertive"
+          >
+            {methods.formState.errors.root.message}
+          </div>
+        )}
+
+      {/* <Input name="email" label="Email" />
+      <Checkbox name="accept" label="Acepto los términos" /> */}
+      {/* //דוגמא לשימוש של הקומפוננטות האחרות */}
+
         {children}
       </form>
     </FormProvider>
