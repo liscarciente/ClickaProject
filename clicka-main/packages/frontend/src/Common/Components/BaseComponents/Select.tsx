@@ -62,6 +62,8 @@ export const SelectField: React.FC<SelectFieldProps> = ({
         <option value="">בחר אפשרות</option>
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>{opt.label}</option>
+          //המפ עובר לי על המערך אופטיונס שהוא בנוי בצורה של LABEL-VALUE 
+          //ואז הוא מייצר לכל OPT את הOPTION שלו 
         ))}
       </select>
       {error && <p className="text-sm text-red-600">{error}</p>}

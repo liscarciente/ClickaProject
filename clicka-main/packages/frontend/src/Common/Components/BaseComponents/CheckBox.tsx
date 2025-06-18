@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+//נותן להיכנס לכל מקום לטפסים שנמצאים בתוך הFORMPROVODER 
 import clsx from "clsx";
 import { useTheme } from "../themeConfig";
 
@@ -11,6 +12,7 @@ interface CheckboxFieldProps {
   dir?: 'rtl' | 'ltr';
   className?: string;
   "data-testid"?: string;
+  //מקבל את כל הדברים שהטופס צריך לקבל 
 }
 
 export const CheckboxField: React.FC<CheckboxFieldProps> = ({
@@ -21,21 +23,26 @@ export const CheckboxField: React.FC<CheckboxFieldProps> = ({
   dir,
   className,
   "data-testid": testId,
+  //הגדרת הקומפוננטה ושימוש בPROPS 
 }) => {
   const theme = useTheme();
   const {
     register,
     formState: { errors },
   } = useFormContext();
-
+//נכנס לתוך הAPI של REACT-HOOK-FORM  כדי שהוא יביא לי את השגיעות 
   const error = errors[name]?.message as string | undefined;
+  //מחפש אם קיים הידעה של שגיעה 
   const effectiveDir = dir || theme.direction;
 
   return (
     <div className="flex items-center space-x-2" dir={effectiveDir}>
       <input
         type="checkbox"
-        {...register(name)}
+        {...register(name)} 
+        //מקשר את זה עוד פעם עם REACT-HOOK כדי לטפל בולידציה והססטוס 
+        //משתמשים בזה במקום הUSESTATE 
+        //לודגמא מה שאני עושה בCHECKBOX נשאר שמור בתוכו בלע צורך לעשות משתנה חדש 
         disabled={disabled}
         aria-required={required}
         aria-invalid={!!error}

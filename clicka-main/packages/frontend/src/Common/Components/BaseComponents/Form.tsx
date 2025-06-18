@@ -52,12 +52,14 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
+//מייבים את ZOD כדי שנוכל להשתמש בולידציות בהמשך הקוד 
 import { useTheme } from "../themeConfig";
 import { useTranslation } from "react-i18next";
+//מגדירים את ז ה לתרגום הFORM 
 
 // import { AlertCircle } from "lucide-react"; // 
 
-// Interfaces base
+
 export interface BaseComponentProps {
   className?: string;
   dir?: "rtl" | "ltr";
@@ -65,18 +67,19 @@ export interface BaseComponentProps {
   children?: React.ReactNode;
 }
 
-// Props del componente de formulario
+
 export interface FormComponentProps<T extends FieldValues>
   extends BaseComponentProps {
   label: string;
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  schema: ZodType<T>;
-  onSubmit: SubmitHandler<T>;
+  schema: ZodType<T>;//סכמה לולידציות של FORM 
+  onSubmit: SubmitHandler<T>; //פונקציה להפעלה בשליחת הטופס 
 }
 
 export function Form<T extends FieldValues>({
+    //מגדירים אותו גנרי כדי שנוכל להשתמש בו עם כל מיני טיפוסים כמו USER,PRODUCT וכו 
   label,
   schema,
   onSubmit,
@@ -86,22 +89,24 @@ export function Form<T extends FieldValues>({
   children,
 }: FormComponentProps<T>) {
   const theme = useTheme();
-  const { t } = useTranslation(); // Traducción activa
+  const { t } = useTranslation(); 
   const effectiveDir = dir || theme.direction;
 
   const methods: UseFormReturn<T> = useForm<T>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
+    //מתי שלוחצים על הONSUBMIT אז ישר בודק לי את הולידציה של הטופס בזכות הZOD 
   });
 
   return (
     <FormProvider {...methods}>
+        {/* //משתמשים בזה כדי שנוכל להשתמש ולהכניס לפה את הקומפוננטות האחרות שגם כן קשורות לטופס וזה עוזר כדי שלא נצטרך להעתיק את כל הPROPS  */}
       <form
         dir={effectiveDir}
         data-testid={testId}
         onSubmit={methods.handleSubmit(onSubmit)}
         className={clsx(
-          "space-y-4 p-4 rounded shadow-md w-full max-w-md",
+         "grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded shadow-md w-full max-w-4xl",
           effectiveDir === "rtl" ? "text-right" : "text-left",
           className
         )}
@@ -112,7 +117,7 @@ export function Form<T extends FieldValues>({
               : theme.typography.fontFamily.latin,
         }}
         role="form"
-        aria-label={t(label)} // Etiqueta accesible traducida
+        aria-label={t(label)} //שיקרא את הכותרת של הטופס 
       >
         <h2 className="text-xl font-semibold mb-4">{t(label)}</h2>
 
@@ -122,6 +127,7 @@ export function Form<T extends FieldValues>({
             className="text-red-600 text-sm mb-2"
             role="alert"
             aria-live="assertive"
+            //אם יש שגיעה גלובלית בעל הטופס, לא משהו מדויק וקטן מראה את זה פה בעזרת הASSERTIVE 
           >
             {methods.formState.errors.root.message}
           </div>
