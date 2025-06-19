@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-//נותן להיכנס לכל מקום לטפסים שנמצאים בתוך הFORMPROVODER 
+//נותן להיכנס לכל מקום לטפסים שנמצאים בתוך הFORMPROVIDER 
 import clsx from "clsx";
 import { useTheme } from "../themeConfig";
 
